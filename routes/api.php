@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+/* OAUTH */
+Route::prefix('oauth')->name('oauth.')->group(function() {
+
+    Route::post('token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+
+    Route::get('token/validate', function () {
+        return ['message' => 'ok', 'code' => 200];
+    })->middleware('auth:api');
+
 });
