@@ -17,6 +17,7 @@ class CreateAccountsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('account_type_id');
             $table->unsignedBigInteger('user_id');
+            $table->string('card_number', 16);
             $table->string('name', 45);
             $table->text('description', 45);
             $table->double('balance')->default(0);

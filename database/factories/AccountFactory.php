@@ -21,6 +21,7 @@ class AccountFactory extends Factory
         return [
             'account_type_id' => $accountType->id,
             'user_id' => $user->id,
+            'card_number' => $this->faker->creditCardNumber(),
             'name' => $this->faker->word,
             'description' => $this->faker->paragraph,
             'balance' => $accountType->name == 'débito' ? $this->faker->numberBetween(0, $user->type->max_monthly_deposits) : $this->faker->numberBetween(0, $user->type->credit_limit),
