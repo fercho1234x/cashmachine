@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +12,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+/* AUTH */
+Route::namespace('Auth')->group(function() {
+    Route::prefix('auth')->name('auth.')->group(function() {
+        Route::get('email/verify/{token}', 'VerificationController@verify')->name('verification.verify');
+        Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+
+        Route::post('email/reset/password', 'PasswordResetController@sendEmailToken')->name('password.reset');
+        Route::post('email/password/reset', 'PasswordResetController@resetPassword')->name('reset.password');
+    });
+    Route::apiResource('auth/register', 'RegisterController')->only('store');
+});
 
 /* OAUTH */
 Route::prefix('oauth')->name('oauth.')->group(function() {

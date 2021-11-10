@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Mail\PasswordResetMessage;
+use App\Mail\VerificationMessage;
+use App\Models\PasswordReset;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        User::created(function($user) {
+            Mail::to($user)->queue(new VerificationMessage($user));
+        });
+
+        PasswordReset::created(function($pR) {
+            Mail::to($pR)->queue(new PasswordResetMessage($pR));
+        });
     }
 }
