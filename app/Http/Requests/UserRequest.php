@@ -28,8 +28,9 @@ class UserRequest extends FormRequest
             'user_type_id'  =>  ['required', 'numeric', 'exists:types_user,id'],
             'name'          =>  ['required', 'string', 'max:45'],
             'last_name'     =>  ['required', 'string', 'max:45'],
-            'email'         =>  ['required', 'string', 'email', 'max:255', $this->user() ? Rule::unique('users')->ignore($this->user()->id) : ''],
-            'password' => ['required', 'string', 'min:5']
+            'email'         =>  ['required', 'string', 'email', 'max:255', $this->user() ? Rule::unique('users', 'email')->ignore($this->user->id) : ''],
+            'password'      =>  ['required', 'string', 'min:5'],
+            'role'          =>  ['string', 'exists:roles,name']
         ];
     }
 }

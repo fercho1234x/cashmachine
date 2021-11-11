@@ -19,9 +19,10 @@ class VerificationController extends Controller
     public function verify($token)
     {
         $user = User::where('verification_token', $token)->firstOrFail();
-        $user->email_verified_at = now();
-        $user->verification_token = null;
-        $user->save();
+        $user->update([
+            'email_verified_at' => now(),
+            'verification_token' => NULL
+        ]);
         return $this->showOne($user);
     }
 

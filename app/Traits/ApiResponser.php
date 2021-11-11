@@ -16,12 +16,12 @@ trait ApiResponser
         return response()->json(['error' => $message, 'code' => $code], $code);
     }
 
-    protected function showAll(Collection $collection, $code = 200)
+    protected function showAll($collection, $code = 200)
     {
         return $this->successResponse($collection, $code);
     }
 
-    protected function showOne(Model $instance, $code = 200)
+    protected function showOne($instance, $code = 200)
     {
         return $this->successResponse($instance, $code);
     }

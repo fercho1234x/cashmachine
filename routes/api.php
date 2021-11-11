@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* AUTH */
-Route::namespace('Auth')->group(function() {
-    Route::prefix('auth')->name('auth.')->group(function() {
+Route::namespace('Auth')->prefix('auth')->group(function() {
+    Route::name('auth.')->group(function() {
         Route::get('email/verify/{token}', 'VerificationController@verify')->name('verification.verify');
         Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
 
         Route::post('email/reset/password', 'PasswordResetController@sendEmailToken')->name('password.reset');
         Route::post('email/password/reset', 'PasswordResetController@resetPassword')->name('reset.password');
     });
-    Route::apiResource('auth/register', 'RegisterController')->only('store');
+    Route::apiResource('register', 'RegisterController')->only('store');
 });
 
 /* OAUTH */
@@ -34,4 +34,11 @@ Route::prefix('oauth')->name('oauth.')->group(function() {
         return ['message' => 'ok', 'code' => 200];
     })->middleware('auth:api');
 
+});
+
+Route::middleware('verified')->namespace('Admin')->prefix('admin')->group(function() {
+    Route::name('users.')->group(function() {
+
+    });
+    Route::apiResource('users', 'UserController');
 });
