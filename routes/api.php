@@ -36,14 +36,14 @@ Route::prefix('oauth')->name('oauth.')->group(function() {
 
 });
 
-Route::middleware('verified')->namespace('Admin')->prefix('admin')->group(function() {
+Route::middleware('email.verified')->namespace('Admin')->prefix('admin')->group(function() {
     Route::name('users.')->group(function() {
 
     });
     Route::apiResource('users', 'UserController');
 });
 
-Route::middleware('verified')->namespace('User')->prefix('user')->group(function() {
+Route::middleware('email.verified')->namespace('User')->prefix('user')->group(function() {
     Route::name('user.')->group(function() {
         Route::get('information', 'UserController@showInformation')->name('show.information');
     });
@@ -63,5 +63,14 @@ Route::middleware('verified')->namespace('User')->prefix('user')->group(function
         Route::middleware('can:payTheCreditCard,account')
             ->post('pay/{account}', 'UserTransactionsController@payTheCreditCard')
             ->name('pay');
+    });
+});
+
+Route::namespace('Transaction')->prefix('transactions')->group(function() {
+    Route::middleware(['type.account:debito'])->name('debit.transactions.')->group(function() {
+        Route::post('new/debit', 'TransactionsController@newTransactionDebitAccount')->name('new');
+    });
+    Route::middleware(['type.account:credito'])->name('credit.transactions.')->group(function() {
+        Route::post('new/credit', 'TransactionsController@newTransactionCreditAccount')->name('new');
     });
 });

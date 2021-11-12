@@ -20,6 +20,10 @@ class ValidateAccountType
      */
     public function handle(Request $request, Closure $next, $typeAccount)
     {
+        if ($request->card_number) {
+            $request->merge(['account' => Account::where('card_number', $request->card_number)->firstOrFail()]);
+        }
+
         if ($request->account->type->name != $typeAccount) {
             return $this->errorResponse('This account is not of type: ' . $typeAccount, 403);
         }
