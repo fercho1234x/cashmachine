@@ -9,6 +9,9 @@ class Account extends Model
 {
     use HasFactory;
 
+    const CREDIT = 'credito';
+    const DEBIT = 'debito';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,5 +43,17 @@ class Account extends Model
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * DB Queries
+     *
+     */
+    public function totalAmountDepositsCurrentMonth()
+    {
+        return $this->transactions()
+            ->whereBetween('created_at', [now()->startOfMonth(), now()])
+            ->where('type', Transaction::TYPE_INCOME)
+            ->sum('amount_of_transaction');
     }
 }

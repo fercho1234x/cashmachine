@@ -9,6 +9,11 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    const TYPE_INCOME = 'ingreso';
+    const TYPE_EXPENSE = 'egreso';
+
+    const CASH_WITHDRAWAL_COMMISSION = 5;
+
     /**
      * The attributes that are mass assignable.
      *

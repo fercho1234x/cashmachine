@@ -18,11 +18,11 @@ class AddPermissionsRolesSeeder extends Seeder
         $adminRole = Role::find(1);
 
         $adminRole->givePermissionTo([
-            'users.index',
-            'users.store',
-            'users.show',
-            'users.update',
-            'users.destroy'
+            'admin.users.index',
+            'admin.users.store',
+            'admin.users.show',
+            'admin.users.update',
+            'admin.users.destroy'
         ]);
     }
 }

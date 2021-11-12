@@ -15,23 +15,23 @@ class PermissionsAdminUsersTableSeeder extends Seeder
     public function run()
     {
         Permission::create([
-            'name'   =>   'users.index'
+            'name'   =>   'admin.users.index'
         ]);
 
         Permission::create([
-            'name'   =>   'users.store'
+            'name'   =>   'admin.users.store'
         ]);
 
         Permission::create([
-            'name'   =>   'users.show'
+            'name'   =>   'admin.users.show'
         ]);
 
         Permission::create([
-            'name'   =>   'users.update'
+            'name'   =>   'admin.users.update'
         ]);
 
         Permission::create([
-            'name'   =>   'users.destroy'
+            'name'   =>   'admin.users.destroy'
         ]);
     }
 }

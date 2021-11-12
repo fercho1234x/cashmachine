@@ -16,7 +16,8 @@ class AccountType extends Model
      */
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'cash_disposition_commission'
     ];
 
     /**

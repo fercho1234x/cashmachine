@@ -24,7 +24,7 @@ class AccountFactory extends Factory
             'card_number' => $this->faker->creditCardNumber(),
             'name' => $this->faker->word,
             'description' => $this->faker->paragraph,
-            'balance' => $accountType->name == 'débito' ? $this->faker->numberBetween(0, $user->type->max_monthly_deposits) : $this->faker->numberBetween(0, $user->type->credit_limit),
+            'balance' => $accountType->name == Account::DEBIT ? $this->faker->numberBetween(0, $user->type->max_monthly_deposits) : $this->faker->numberBetween(0, $user->type->credit_limit),
         ];
     }
 }

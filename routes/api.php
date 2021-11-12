@@ -42,3 +42,26 @@ Route::middleware('verified')->namespace('Admin')->prefix('admin')->group(functi
     });
     Route::apiResource('users', 'UserController');
 });
+
+Route::middleware('verified')->namespace('User')->prefix('user')->group(function() {
+    Route::name('user.')->group(function() {
+        Route::get('information', 'UserController@showInformation')->name('show.information');
+    });
+
+    Route::middleware('type.account:debito')->prefix('debit/transactions')->name('user.transactions')->group(function() {
+        Route::middleware('can:addFoundsDebitAccount,account')
+            ->post('add-founds/{account}', 'UserTransactionsController@addFoundsDebitAccount')
+            ->name('add.founds');
+        Route::middleware('can:withdrawFoundsDebitAccount,account')
+            ->post('withdraw-founds/{account}', 'UserTransactionsController@withdrawFoundsDebitAccount')
+            ->name('withdraw.founds');
+    });
+
+    Route::middleware(['can:withdrawFoundsCreditAccount,account', 'type.account:credito', 'type.user:tipo2|tipo3|tipo4'])->prefix('credit/transactions')->name('user.credit.transactions')->group(function() {
+        Route::middleware('can:withdrawFoundsCreditAccount,account')
+            ->post('withdraw-founds/{account}', 'UserTransactionsController@withdrawFoundsCreditAccount')->name('withdraw.founds');
+        Route::middleware('can:payTheCreditCard,account')
+            ->post('pay/{account}', 'UserTransactionsController@payTheCreditCard')
+            ->name('pay');
+    });
+});

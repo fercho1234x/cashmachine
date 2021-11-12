@@ -15,13 +15,14 @@ class AccountTypeSeeder extends Seeder
     public function run()
     {
         AccountType::create([
-            'name'                  =>  'débito',
+            'name'                  =>  'debito',
             'description'           =>  'cuenta de débito'
         ]);
 
         AccountType::create([
-            'name'                  =>  'crédito',
-            'description'           =>  'cuenta de crédito'
+            'name'                  =>  'credito',
+            'description'           =>  'cuenta de crédito',
+            'cash_disposition_commission' => 5
         ]);
     }
 }

@@ -17,6 +17,7 @@ class CreateAccountTypesTable extends Migration
             $table->id();
             $table->string('name', 45);
             $table->text('description', 45);
+            $table->double('cash_disposition_commission')->default(0);
             $table->timestamps();
         });
     }

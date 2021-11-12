@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -59,6 +58,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Return max monthly deposit
+     *
+     *
+     */
+    public function getMaxMonthlyDeposits()
+    {
+        return $this->type->max_monthly_deposits;
+    }
+
+    /**
      * Generate verification token
      *
      *
@@ -102,5 +111,14 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * DB Queries
+     *
+     */
+    public function getAuthenticatedUserInformation(): User
+    {
+        return $this->load('accounts')->load('type');
     }
 }
