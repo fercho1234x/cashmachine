@@ -7,60 +7,96 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Cash Machine
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Cash Machine App
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
+- Local Server (Laragon, Xamp, etc...)
+- Composer
+- MySQL
+- In case you do not have a local server, run the command (when installing dependencies):
+```
+php artisan serve
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
+Create database, run the following commands:
+- Login to MySQL
+```
+mysql -u {USER} -p {PASSWORD}
+```
+- Or Default User
+```
+mysql -u root -p
 
-## Learning Laravel
+```
+- Create Data Base
+```
+mysql CREATE DATABASE cash_machine;
+```
+- In the project folder, execute the following commands
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Install project dependencies
+```
+composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Run migrations and seeders
+```
+php artisan migrate:fresh --seed
+```
 
-## Laravel Sponsors
+Install Passport
+```
+php artisan passport:install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# Project proposal
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://adsnetlog.com/img/db.jpg" width="800"></a></p>
 
-### Premium Partners
+# Postman Documentation
+https://www.postman.com/collections/36e759a0618d43f3a43a
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+# Notas
+With Laravel Passport we used grant type password
+When executing the command:
+Install Passport
+```
+php artisan passport:install
+```
+Will return the following
+```
+Encryption keys generated successfully.
+Personal access client created successfully.
+Client ID: 1
+Client secret: CxiGoiwJqzUFyQPbuW3QQ1jstR4zYc25hOq2CICe
+Password grant client created successfully.
+Client ID: 2
+Client secret: X9hxNXZ35wWPBskv9QUUjNhUi5AiCM5byKZYrwDr
+```
+You will need the client secret with id 2 to be able to connect.
 
-## Contributing
+## Login
+- All demo users created have the following password 12345
+- Method Post to: {{host}}/oauth/token
+```
+{
+    "grant_type": "password",
+    "client_id": "2",
+    "client_secret": "X9hxNXZ35wWPBskv9QUUjNhUi5AiCM5byKZYrwDr",
+    "username": "gladyce.skiles@example.org",
+    "password": "12345"
+}
+```
+Returns the following
+```
+{
+    "token_type": "Bearer",
+    "expires_in": 2591999,
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiNDA0MmFkNGY2MTMzMTUwNGM3NDY0ODUwZWE1ZjAwZWU2OTRhZWJmYTM1NDM2MDIxMWM0NjIyMmM5Y2UzODU1N2FmMjZiOTQ3MTcxYWUyNmMiLCJpYXQiOjE2MzY3MzM3ODEuMTQ0Njk4LCJuYmYiOjE2MzY3MzM3ODEuMTQ0NzA0LCJleHAiOjE2MzkzMjU3ODAuMzcwNjcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.kJaozqKroc_WdgLbkFgIEr_aFTWD0fMqqci-WWEPnaGj1Kxck3g_SUwcZDRQQJkItXwW9iDDqvArJP8IGQJq9ka-kj_wpEkTYIEPC2eNKHpxoPC08nVBsym-NCw7EB_GiY7B647DNtoR7FFQEiYznn8nCwY-HGAjeOPrESA7e4rGFWc0Y72a9qeAh8tJVuYlamGvMxM85qJft7S1D_Y4cVz7uPq1FxZBdXwrBLgKDbV6eywsR7aRKEftokGkirHbs1oyy0WURlMxLxdmjvgvLNw22UoucSG-94KD8fqmqozN9HJww94liN6iY0wS3DhZof5kEfbCUTzf1kT04l5okmI0DPtsukRwSTBw3jRXTOS3yJsZugAFlkua-sDJw6iwy4T0rEf-4Rnqq7jgzfX-nrcfaBzFYqSXYIvuNn4XNiuMLIupRkQcBpmEAp25QoEd6TzolfqAlV2U7SlDp1RxHvePaXGm9pk_PG_rRE-JR3X8t7JKU6E-xRbeBdphsgMWTOO8nIOZs_EDp8Ruk6O-cAh1cYM_qun2jsQzth83zrvRKeTv3NHGAIGf_dPQeKfA7Zxo17bv7E8DnzRwzOgNmY9v328gEfiukT4eJn6Asfip5vmQRTCxJy0A3oyRZ6p0_cGTIRH9qY03rDRlSxWUpJQ7N04MEmT0VHC589ukZCY",
+    "refresh_token": "def50200c6b8f5950e38e135705928acab532a09d47ef2844a4becfe927fdf2a6fd7fac3695ee820aa69e159590388a57a8b1580ef388ae5ad7317438f3e71fb9b20cdda777751b1e83a47243121c86a764c7f8aae281ab424e39914b1b417a6339cddc7a4e7a323aa0561198a5491667be0d3ef46c0f80c150c8b6742e704d23e5022b118d7498580b90615dcc4a0d22a38acd16db3c6fa8a26732038bc59ec4054838021294bb01c694465dc03b22022c1caa93808b17634500b7c0610ec9ae03234f9b0c83c108b45bf1e50d139f9b11776cc51634bb9a1240a27f584af849c3fbf8f8bf2e0e040cd20e430e22b09dd24728251ba74edf2705e77fe6c14f973e05707b5ee99634e67b91193740330e587bc42559ce64ef136edd7c65f546be0400da96926aa5d459cea280bd6549ea467bdf4c96fec779ed8825aa71eca503eb45b78cc29039bf966948f23d1be3eeb6edce4e371ffad0d8566e40c141d6d79"
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+You will need the access token to access the routes that require authentication.
